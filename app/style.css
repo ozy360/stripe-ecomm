@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body, .tv-display-mode-regular {
+  font-family: var(--font-body-sans), sans-serif !important;
+}
+
+.container {
+    @apply mx-auto px-6 pt-20 md:pt-20 lg:pt-60 max-w-6xl
+}
