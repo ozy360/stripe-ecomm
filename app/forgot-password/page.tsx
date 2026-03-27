@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useFormStatus } from 'react-dom';
-import { useActionState, useState, useEffect } from 'react';
-import { Toaster, toast } from 'sonner';
-import Image from 'next/image';
-import Link from 'next/link';
-import { sendVerificationCodeAction, resetPasswordAction } from './actions';
-import { Button } from '@/components/ui/button';
+import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
+import { useActionState, useState, useEffect } from "react";
+import { Toaster, toast } from "sonner";
+import Image from "next/image";
+import Link from "next/link";
+import { sendVerificationCodeAction, resetPasswordAction } from "./actions";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import { CircleIcon, ArrowLeftIcon } from '@phosphor-icons/react';
+import { CircleIcon, ArrowLeftIcon } from "@phosphor-icons/react";
 const initialState = null;
 
 function SendCodeButton() {
@@ -32,7 +32,7 @@ function SendCodeButton() {
           Sending code...
         </>
       ) : (
-        'Send Verification Code'
+        "Send Verification Code"
       )}
     </Button>
   );
@@ -49,7 +49,7 @@ function ResetPasswordButton() {
           Resetting password...
         </>
       ) : (
-        'Reset Password'
+        "Reset Password"
       )}
     </Button>
   );
@@ -57,8 +57,8 @@ function ResetPasswordButton() {
 
 export default function ForgotPassword() {
   const router = useRouter();
-  const [step, setStep] = useState<'email' | 'reset'>('email');
-  const [email, setEmail] = useState('');
+  const [step, setStep] = useState<"email" | "reset">("email");
+  const [email, setEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
 
   const [sendCodeState, sendCodeAction] = useActionState(
@@ -81,34 +81,34 @@ export default function ForgotPassword() {
 
   // Handle send code response
   useEffect(() => {
-    if (sendCodeState && 'error' in sendCodeState) {
+    if (sendCodeState && "error" in sendCodeState) {
       toast.error(sendCodeState.error, { duration: 4000 });
-    } else if (sendCodeState && 'success' in sendCodeState) {
-      toast.success('Verification code sent to your email!', {
+    } else if (sendCodeState && "success" in sendCodeState) {
+      toast.success("Verification code sent to your email!", {
         duration: 4000,
       });
-      setStep('reset');
+      setStep("reset");
       setTimeLeft(30);
     }
   }, [sendCodeState]);
 
   // Handle reset password response
   useEffect(() => {
-    if (resetState && 'error' in resetState) {
+    if (resetState && "error" in resetState) {
       toast.error(resetState.error, { duration: 4000 });
-    } else if (resetState && 'success' in resetState && resetState.redirect) {
-      toast.success('Password reset successful! Redirecting to login...', {
+    } else if (resetState && "success" in resetState && resetState.redirect) {
+      toast.success("Password reset successful! Redirecting to login...", {
         duration: 3000,
       });
       setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 1500);
     }
   }, [resetState, router]);
 
   const handleResend = () => {
     const formData = new FormData();
-    formData.append('email', email);
+    formData.append("email", email);
     sendCodeAction(formData);
   };
 
@@ -119,29 +119,28 @@ export default function ForgotPassword() {
       <div className="flex w-full items-center justify-center overflow-y-auto py-10 lg:min-h-screen">
         <Card className="w-full max-w-md !border-none bg-transparent">
           <CardHeader className="space-y-4">
-            <Link href="/">
-              <Image
-                src="/logo.png"
-                width={60}
-                height={60}
-                alt="logo"
-                className="mb-2"
-              />
+            <Link
+              href="/"
+              className="mr-6 flex items-center space-x-2 text-white"
+            >
+              <span className="text-xl font-bold inline-block">
+                {process.env.NEXT_PUBLIC_APP_NAME}
+              </span>
             </Link>
             <div>
               <CardTitle className="text-2xl">
-                {step === 'email' ? 'Forgot Password?' : 'Reset Password'}
+                {step === "email" ? "Forgot Password?" : "Reset Password"}
               </CardTitle>
               <CardDescription>
-                {step === 'email'
-                  ? 'Enter your email to receive a verification code'
-                  : 'Enter the code and your new password'}
+                {step === "email"
+                  ? "Enter your email to receive a verification code"
+                  : "Enter the code and your new password"}
               </CardDescription>
             </div>
           </CardHeader>
 
           <CardContent>
-            {step === 'email' ? (
+            {step === "email" ? (
               <form action={sendCodeAction} className="space-y-4">
                 {/* Email */}
                 <div className="space-y-2">
@@ -166,7 +165,7 @@ export default function ForgotPassword() {
                   type="button"
                   variant="outline"
                   className="w-full cursor-pointer"
-                  onClick={() => router.push('/login')}
+                  onClick={() => router.push("/login")}
                 >
                   Back to Login
                 </Button>
@@ -226,7 +225,7 @@ export default function ForgotPassword() {
                   type="button"
                   variant="ghost"
                   className="w-full"
-                  onClick={() => setStep('email')}
+                  onClick={() => setStep("email")}
                 >
                   <ArrowLeftIcon className="mr-2 h-5 w-5" />
                   Back
@@ -252,7 +251,7 @@ export default function ForgotPassword() {
 
             <div className="mt-6 text-center">
               <p className="text-muted-foreground text-sm">
-                Remember your password?{' '}
+                Remember your password?{" "}
                 <Link
                   href="/login"
                   className="text-primary font-medium hover:underline"

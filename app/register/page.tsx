@@ -59,14 +59,13 @@ export default function Signup() {
       <div className="flex lg:min-h-screen w-full items-center justify-center overflow-y-auto py-10">
         <Card className="w-full max-w-md bg-transparent !border-none">
           <CardHeader className="space-y-4">
-            <Link href="/">
-              <Image
-                src="/logo.png"
-                width={60}
-                height={60}
-                alt="logo"
-                className="mb-2"
-              />
+            <Link
+              href="/"
+              className="mr-6 flex items-center space-x-2 text-white"
+            >
+              <span className="text-xl font-bold inline-block">
+                {process.env.NEXT_PUBLIC_APP_NAME}
+              </span>
             </Link>
             <div>
               <CardTitle className="text-2xl">Create Account</CardTitle>
